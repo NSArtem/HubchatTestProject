@@ -38,15 +38,16 @@ class PostCellViewModel: ViewModelProtocol {
             }, failure: { debugPrint($0) })
         }
         
-        if var images = postImages {
+        if let images = postImages {
             for index in 0..<images.count {
                 guard let url = model?.entities?[index].imageURL else { continue }
                 self.network.getImage(endpoint: url, success: { image in
-                    images[index].image = image
+                    self.postImages?[index].image = image
                     self.didUpdate?(self)
                 }, failure: { debugPrint($0) })
             }
         }
+        
         
         
     }
@@ -54,11 +55,10 @@ class PostCellViewModel: ViewModelProtocol {
     private let network: NetworkService
     
     init(model: PostModel, network: NetworkService) {
-//        var entities: [PostEntity]?
         self.model = model
         self.network = network
         self.userName = model.username
-        self.upvotes = "\(model.upvotes) likes this post"
+        self.upvotes = "\(model.upvotes ?? 0) likes this post"
         self.postText = model.rawContent
         self.postImages = model.entities?.map() { PostImage(width: $0.width, height: $0.height, image: nil) }
     }

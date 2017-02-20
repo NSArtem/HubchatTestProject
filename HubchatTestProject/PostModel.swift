@@ -40,6 +40,6 @@ let postModelRule = ClassRule(PostModel())
     .optional("stats"/"upVotes", IntRule) { $0.upvotes = $1 }
 
 let entityRule = ClassRule(PostEntity())
-    .optional("cndUrl", StringRule) { $0.imageURL = $1 }
+    .optional("cdnUrl", StringRule) { $0.imageURL = $1 }
     .optional("width", IntRule) { $0.width = $1 }
     .optional("height", IntRule) { $0.height = $1 }

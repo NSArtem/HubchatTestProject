@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 class PostCell: UITableViewCell {
     
@@ -17,20 +18,19 @@ class PostCell: UITableViewCell {
     
     var avatarImageView: UIImageView?
     var userNameLabel: UILabel?
-    var imageViews: [UIImageView]?
+    var postImageView: UIImageView?
     var postTextLabel: UILabel?
-    
-    
+    var upvoteLabel: UILabel?
+
     func bindViewModel(viewModel: PostCellViewModel) {
         self.viewModel = viewModel
         setupViews()
         userNameLabel?.text = viewModel.userName
         postTextLabel?.text = viewModel.postText
+        upvoteLabel?.text = viewModel.upvotes
         self.viewModel?.didUpdate = { viewModel in
             self.avatarImageView?.image = viewModel.userImage
-            for (index, imageView) in (self.imageViews ?? []).enumerated() {
-                imageView.image = viewModel.postImages?[index].image
-            }
+            self.postImageView?.image = viewModel.postImages?.first?.image
         }
     }
     
@@ -61,7 +61,6 @@ class PostCell: UITableViewCell {
             maker.centerY.equalTo(avatarImageView)
             maker.left.equalTo(avatarImageView.snp.right).offset(8)
             maker.right.greaterThanOrEqualTo(contentView.snp.right).offset(-8)
-            
         }
         self.userNameLabel = userNameLabel
         
@@ -76,34 +75,36 @@ class PostCell: UITableViewCell {
         }
         self.postTextLabel = postTextLabel
         
-        var imageViews = [UIImageView]()
-        
-        //pictures
-        if let imagesToAdd = viewModel?.postImages {
-            for (index, image) in imagesToAdd.enumerated() {
-                let imageView = UIImageView()
-                contentView.addSubview(imageView)
-                imageViews.append(imageView)
-                imageView.snp.makeConstraints({ (maker) in
-                    maker.left.equalTo(contentView)
-                    maker.right.equalTo(contentView)
-                    if index == 0 {
-                        maker.top.equalTo(postTextLabel.snp.bottom).offset(8)
-                    } else {
-                        maker.top.equalTo(imageViews[index-1].snp.bottom)
-                    }
-                    if index == imagesToAdd.count-1 {
-                        maker.bottom.equalTo(contentView)
-                    }
-                    if let width = image.width, let height = image.height {
-                        maker.width.equalTo(imageView.snp.height).multipliedBy(Float(width) / Float(height))
-                    }
-                })
+        //ImageView
+        let postImageView = UIImageView()
+        contentView.addSubview(postImageView)
+        postImageView.clipsToBounds = true
+        postImageView.contentMode = UIViewContentMode.scaleAspectFill
+        postImageView.backgroundColor = UIColor.blue
+        postImageView.snp.makeConstraints { (maker) in
+            maker.top.equalTo(postTextLabel.snp.bottom).offset(8)
+            maker.left.equalTo(contentView)
+            maker.right.equalTo(contentView)
+            var ratio: Float
+            if let width = viewModel?.postImages?.first?.width, let height = viewModel?.postImages?.first?.height {
+                ratio = Float(width/height)
+            } else {
+                ratio = 0.64
             }
+            maker.height.equalTo(postImageView.snp.width).multipliedBy(ratio)
         }
+        self.postImageView = postImageView
         
-        self.imageViews = imageViews
- 
+        //upvotes
+        let upvoteLabel = UILabel()
+        contentView.addSubview(upvoteLabel)
+        upvoteLabel.snp.makeConstraints { (maker) in
+            maker.top.equalTo(postImageView.snp.bottom).offset(8)
+            maker.left.equalTo(contentView)
+            maker.right.equalTo(contentView)
+            maker.bottom.equalTo(contentView).offset(-6)
+        }
+        self.upvoteLabel = upvoteLabel
     }
     
     override func prepareForReuse() {
