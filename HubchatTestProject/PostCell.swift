@@ -99,9 +99,9 @@ class PostCell: UITableViewCell {
         contentView.addSubview(upvoteLabel)
         upvoteLabel.snp.makeConstraints { (maker) in
             maker.top.equalTo(postImageView.snp.bottom).offset(8)
-            maker.left.equalTo(contentView)
-            maker.right.equalTo(contentView)
-            maker.bottom.equalTo(contentView).offset(-6)
+            maker.left.equalTo(contentView).offset(8)
+            maker.right.equalTo(contentView).offset(-8)
+            maker.bottom.equalTo(contentView).offset(-8)
         }
         self.upvoteLabel = upvoteLabel
     }
