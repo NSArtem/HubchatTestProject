@@ -11,8 +11,8 @@ import UIKit
 class PostsFeedViewModel: ViewModelProtocol {
     
     typealias T = PostsFeedViewModel
-    internal var didError: ((Error) -> Void)?
-    internal var didUpdate: ((PostsFeedViewModel) -> Void)?
+    internal var viewModelDidError: ((Error) -> Void)?
+    internal var viewModelDidUpdate: ((PostsFeedViewModel) -> Void)?
     
     private let network: NetworkService
     
@@ -21,15 +21,13 @@ class PostsFeedViewModel: ViewModelProtocol {
     }
     
     private(set) var postCells: [PostCellViewModel]?
-    
 
-    
     func reloadData() {
         network.getPosts(success: { (feedModel) in
             self.postCells = feedModel.posts.map() { PostCellViewModel(model: $0, network: self.network) }
-            self.didUpdate?(self)
+            self.viewModelDidUpdate?(self)
         }) { (error) in
-            self.didError?(error)
+            self.viewModelDidError?(error)
         }
     }
 }

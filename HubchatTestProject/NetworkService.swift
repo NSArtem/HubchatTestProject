@@ -38,8 +38,7 @@ class NetworkService {
     }
         
     func urlForEndpoint(_ endpoint: String) -> String? {
-        //TODO: gross
-        return URL(string: endpoint, relativeTo: self.baseURL)?.absoluteString
+        return URL(string: endpoint, relativeTo: baseURL)?.absoluteString
     }
     
     func getPhotographyForum(success:  @escaping (PhotographyForumModel)->Void, failure: @escaping (Error)->Void) {

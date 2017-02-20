@@ -28,7 +28,7 @@ class PostCell: UITableViewCell {
         userNameLabel?.text = viewModel.userName
         postTextLabel?.text = viewModel.postText
         upvoteLabel?.text = viewModel.upvotes
-        self.viewModel?.didUpdate = { viewModel in
+        self.viewModel?.viewModelDidUpdate = { viewModel in
             self.avatarImageView?.image = viewModel.userImage
             self.postImageView?.image = viewModel.postImages?.first?.image
         }

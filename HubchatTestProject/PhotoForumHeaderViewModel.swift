@@ -8,17 +8,10 @@
 
 import UIKit
 
-protocol ViewModelProtocol {
-    associatedtype T
-    var didUpdate: ((T)->Void)? { get set }
-    var didError: ((Error)->Void)? { get set }
-    func reloadData()
-}
-
 class PhotoForumHeaderViewModel: ViewModelProtocol {
     
-    internal var didError: ((Error) -> Void)?
-    internal var didUpdate: ((PhotoForumHeaderViewModel) -> Void)?
+    internal var viewModelDidError: ((Error) -> Void)?
+    internal var viewModelDidUpdate: ((PhotoForumHeaderViewModel) -> Void)?
     
     fileprivate(set) var isUpdating: Bool = false
     private let network: NetworkService
@@ -44,13 +37,13 @@ class PhotoForumHeaderViewModel: ViewModelProtocol {
             if let url = model.headerImageURL {
                 self.network.getImage(endpoint: url, success: { image in
                     self.headerImage = image
-                    self.didUpdate?(self)
+                    self.viewModelDidUpdate?(self)
                 }, failure: { debugPrint($0) })
             }
             self.isUpdating = false
-            self.didUpdate?(self)
+            self.viewModelDidUpdate?(self)
         }, failure: { error in
-            self.didError?(error)
+            self.viewModelDidError?(error)
         })
         
     }

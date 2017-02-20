@@ -18,8 +18,8 @@ class PostCellViewModel: ViewModelProtocol {
     
     typealias T = PostCellViewModel
     
-    internal var didError: ((Error) -> Void)?
-    internal var didUpdate: ((PostCellViewModel) -> Void)?
+    internal var viewModelDidError: ((Error) -> Void)?
+    internal var viewModelDidUpdate: ((PostCellViewModel) -> Void)?
     
     private let model: PostModel?
 
@@ -34,7 +34,7 @@ class PostCellViewModel: ViewModelProtocol {
         if let avatarURL = model?.avatarURL {
             self.network.getImage(endpoint: avatarURL, success: { userImage in
                 self.userImage = userImage
-                self.didUpdate?(self)
+                self.viewModelDidUpdate?(self)
             }, failure: { debugPrint($0) })
         }
         
@@ -43,13 +43,10 @@ class PostCellViewModel: ViewModelProtocol {
                 guard let url = model?.entities?[index].imageURL else { continue }
                 self.network.getImage(endpoint: url, success: { image in
                     self.postImages?[index].image = image
-                    self.didUpdate?(self)
+                    self.viewModelDidUpdate?(self)
                 }, failure: { debugPrint($0) })
             }
         }
-        
-        
-        
     }
 
     private let network: NetworkService

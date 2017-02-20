@@ -14,6 +14,7 @@
 		6928D39D1E5A1FCE008F6595 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D39C1E5A1FCE008F6595 /* PostCell.swift */; };
 		6928D39F1E5A3611008F6595 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D39E1E5A3611008F6595 /* PostModel.swift */; };
 		6928D3A91E5A51FA008F6595 /* PostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D3A81E5A51FA008F6595 /* PostCellViewModel.swift */; };
+		69298F0D1E5ACA5D009818C9 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69298F0C1E5ACA5D009818C9 /* ViewModelProtocol.swift */; };
 		69E611B81E59D9D8003D79AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E611B71E59D9D8003D79AB /* AppDelegate.swift */; };
 		69E611BA1E59D9D8003D79AB /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E611B91E59D9D8003D79AB /* MainScreenViewController.swift */; };
 		69E611BF1E59D9D8003D79AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69E611BE1E59D9D8003D79AB /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 		6928D39C1E5A1FCE008F6595 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		6928D39E1E5A3611008F6595 /* PostModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		6928D3A81E5A51FA008F6595 /* PostCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCellViewModel.swift; sourceTree = "<group>"; };
+		69298F0C1E5ACA5D009818C9 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		69E611B41E59D9D8003D79AB /* HubchatTestProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HubchatTestProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69E611B71E59D9D8003D79AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69E611B91E59D9D8003D79AB /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 		6928D3A41E5A3938008F6595 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				69298F0C1E5ACA5D009818C9 /* ViewModelProtocol.swift */,
 				6928D39A1E5A0D16008F6595 /* PhotoForumHeaderViewModel.swift */,
 				6928D3981E59F41F008F6595 /* PostsFeedViewModel.swift */,
 				6928D3A81E5A51FA008F6595 /* PostCellViewModel.swift */,
@@ -403,6 +406,7 @@
 				6928D3991E59F41F008F6595 /* PostsFeedViewModel.swift in Sources */,
 				6928D39F1E5A3611008F6595 /* PostModel.swift in Sources */,
 				6928D3A91E5A51FA008F6595 /* PostCellViewModel.swift in Sources */,
+				69298F0D1E5ACA5D009818C9 /* ViewModelProtocol.swift in Sources */,
 				69E611B81E59D9D8003D79AB /* AppDelegate.swift in Sources */,
 				6928D3971E59F0EB008F6595 /* PhotoForumModel.swift in Sources */,
 				6928D39B1E5A0D16008F6595 /* PhotoForumHeaderViewModel.swift in Sources */,

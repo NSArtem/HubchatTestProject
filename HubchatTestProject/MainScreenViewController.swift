@@ -38,24 +38,24 @@ class MainScreenController: UIViewController {
     }
     
     private func bindViewModel() {
-        headerViewModel?.didError = { error in
+        headerViewModel?.viewModelDidError = { error in
             let alert = UIAlertController(title: "Unable to load data", message: "Check your netowrk connection", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default)
             alert.addAction(action)
             self.present(alert, animated: true)
         }
-        headerViewModel?.didUpdate = { viewModel in
+        headerViewModel?.viewModelDidUpdate = { viewModel in
             self.titleLabel?.text = viewModel.title
             self.descriptionLabel?.text = viewModel.description
             self.headerImageView?.image = viewModel.headerImage
         }
-        feedViewModel?.didError = { error in
+        feedViewModel?.viewModelDidError = { error in
             let alert = UIAlertController(title: "Unable to load data", message: "Check your netowrk connection", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default)
             alert.addAction(action)
             self.present(alert, animated: true)
         }
-        feedViewModel?.didUpdate = { viewModel in
+        feedViewModel?.viewModelDidUpdate = { viewModel in
             self.tableView?.reloadData()
         }
 
@@ -63,7 +63,7 @@ class MainScreenController: UIViewController {
     
     private func setupView() {
         //TableView
-        let tableView = UITableView(frame: CGRect.zero, style: .grouped)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension;
@@ -84,7 +84,7 @@ class MainScreenController: UIViewController {
         descriptionLabel = UILabel()
         descriptionLabel?.numberOfLines = 0
         descriptionLabel?.textAlignment = .center
-        descriptionLabel?.textColor = UIColor.white
+        descriptionLabel?.textColor = .white
         headerView?.addSubview(headerImageView!)
         headerView?.addSubview(titleLabel!)
         headerView?.addSubview(descriptionLabel!)
@@ -105,15 +105,11 @@ class MainScreenController: UIViewController {
 
 }
 
+//MARK: - UITableViewDataSource
 extension MainScreenController: UITableViewDataSource {
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return feedViewModel?.postCells?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return heightForHeader
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -129,12 +125,17 @@ extension MainScreenController: UITableViewDataSource {
         return cell
     }
     
+
+}
+
+//MARK: - UITableViewDelegate
+extension MainScreenController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return heightForHeader
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         (cell as? PostCell)?.loadData()
     }
-}
-
-extension MainScreenController: UITableViewDelegate {
-    
 }
 
