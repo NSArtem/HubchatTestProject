@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		6928D3951E59DF56008F6595 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D3941E59DF56008F6595 /* NetworkService.swift */; };
 		6928D3971E59F0EB008F6595 /* PhotoForumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D3961E59F0EB008F6595 /* PhotoForumModel.swift */; };
-		6928D3991E59F41F008F6595 /* PhotoForumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D3981E59F41F008F6595 /* PhotoForumViewModel.swift */; };
+		6928D3991E59F41F008F6595 /* PostsFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D3981E59F41F008F6595 /* PostsFeedViewModel.swift */; };
 		6928D39B1E5A0D16008F6595 /* PhotoForumHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D39A1E5A0D16008F6595 /* PhotoForumHeaderViewModel.swift */; };
 		6928D39D1E5A1FCE008F6595 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D39C1E5A1FCE008F6595 /* PostCell.swift */; };
+		6928D39F1E5A3611008F6595 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D39E1E5A3611008F6595 /* PostModel.swift */; };
+		6928D3A91E5A51FA008F6595 /* PostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6928D3A81E5A51FA008F6595 /* PostCellViewModel.swift */; };
 		69E611B81E59D9D8003D79AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E611B71E59D9D8003D79AB /* AppDelegate.swift */; };
 		69E611BA1E59D9D8003D79AB /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E611B91E59D9D8003D79AB /* MainScreenViewController.swift */; };
 		69E611BF1E59D9D8003D79AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69E611BE1E59D9D8003D79AB /* Assets.xcassets */; };
@@ -37,9 +39,11 @@
 		5DF790E778472E76CD88BB0D /* Pods_HubchatTestProjectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HubchatTestProjectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6928D3941E59DF56008F6595 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		6928D3961E59F0EB008F6595 /* PhotoForumModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoForumModel.swift; sourceTree = "<group>"; };
-		6928D3981E59F41F008F6595 /* PhotoForumViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoForumViewModel.swift; sourceTree = "<group>"; };
+		6928D3981E59F41F008F6595 /* PostsFeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsFeedViewModel.swift; sourceTree = "<group>"; };
 		6928D39A1E5A0D16008F6595 /* PhotoForumHeaderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoForumHeaderViewModel.swift; sourceTree = "<group>"; };
 		6928D39C1E5A1FCE008F6595 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		6928D39E1E5A3611008F6595 /* PostModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		6928D3A81E5A51FA008F6595 /* PostCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCellViewModel.swift; sourceTree = "<group>"; };
 		69E611B41E59D9D8003D79AB /* HubchatTestProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HubchatTestProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69E611B71E59D9D8003D79AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69E611B91E59D9D8003D79AB /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +98,60 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6928D3A01E5A3915008F6595 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6928D39E1E5A3611008F6595 /* PostModel.swift */,
+				6928D3961E59F0EB008F6595 /* PhotoForumModel.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		6928D3A11E5A3925008F6595 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				6928D3941E59DF56008F6595 /* NetworkService.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		6928D3A21E5A392D008F6595 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				69E611B71E59D9D8003D79AB /* AppDelegate.swift */,
+				69E611BE1E59D9D8003D79AB /* Assets.xcassets */,
+				69E611C31E59D9D8003D79AB /* Info.plist */,
+				69E611C01E59D9D8003D79AB /* LaunchScreen.storyboard */,
+			);
+			name = Supporting;
+			sourceTree = "<group>";
+		};
+		6928D3A31E5A3933008F6595 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				69E611B91E59D9D8003D79AB /* MainScreenViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		6928D3A41E5A3938008F6595 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				6928D39A1E5A0D16008F6595 /* PhotoForumHeaderViewModel.swift */,
+				6928D3981E59F41F008F6595 /* PostsFeedViewModel.swift */,
+				6928D3A81E5A51FA008F6595 /* PostCellViewModel.swift */,
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		6928D3A51E5A393E008F6595 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6928D39C1E5A1FCE008F6595 /* PostCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		69E611AB1E59D9D7003D79AB = {
 			isa = PBXGroup;
 			children = (
@@ -117,16 +175,12 @@
 		69E611B61E59D9D8003D79AB /* HubchatTestProject */ = {
 			isa = PBXGroup;
 			children = (
-				69E611B71E59D9D8003D79AB /* AppDelegate.swift */,
-				69E611BE1E59D9D8003D79AB /* Assets.xcassets */,
-				6928D3941E59DF56008F6595 /* NetworkService.swift */,
-				69E611C31E59D9D8003D79AB /* Info.plist */,
-				69E611C01E59D9D8003D79AB /* LaunchScreen.storyboard */,
-				69E611B91E59D9D8003D79AB /* MainScreenViewController.swift */,
-				6928D39C1E5A1FCE008F6595 /* PostCell.swift */,
-				6928D39A1E5A0D16008F6595 /* PhotoForumHeaderViewModel.swift */,
-				6928D3961E59F0EB008F6595 /* PhotoForumModel.swift */,
-				6928D3981E59F41F008F6595 /* PhotoForumViewModel.swift */,
+				6928D3A31E5A3933008F6595 /* Controllers */,
+				6928D3A01E5A3915008F6595 /* Models */,
+				6928D3A11E5A3925008F6595 /* Networking */,
+				6928D3A21E5A392D008F6595 /* Supporting */,
+				6928D3A41E5A3938008F6595 /* ViewModels */,
+				6928D3A51E5A393E008F6595 /* Views */,
 			);
 			path = HubchatTestProject;
 			sourceTree = "<group>";
@@ -346,7 +400,9 @@
 				6928D39D1E5A1FCE008F6595 /* PostCell.swift in Sources */,
 				69E611BA1E59D9D8003D79AB /* MainScreenViewController.swift in Sources */,
 				6928D3951E59DF56008F6595 /* NetworkService.swift in Sources */,
-				6928D3991E59F41F008F6595 /* PhotoForumViewModel.swift in Sources */,
+				6928D3991E59F41F008F6595 /* PostsFeedViewModel.swift in Sources */,
+				6928D39F1E5A3611008F6595 /* PostModel.swift in Sources */,
+				6928D3A91E5A51FA008F6595 /* PostCellViewModel.swift in Sources */,
 				69E611B81E59D9D8003D79AB /* AppDelegate.swift in Sources */,
 				6928D3971E59F0EB008F6595 /* PhotoForumModel.swift in Sources */,
 				6928D39B1E5A0D16008F6595 /* PhotoForumHeaderViewModel.swift in Sources */,

@@ -12,8 +12,9 @@ import SnapKit
 class MainScreenController: UIViewController {
 
     var headerViewModel: PhotoForumHeaderViewModel?
+    var feedViewModel: PostsFeedViewModel?
     
-    let cellidentifier: String = "postcell"
+    let heightForHeader: CGFloat = 256.0
     
     var headerImageView: UIImageView?
     var titleLabel: UILabel?
@@ -27,11 +28,13 @@ class MainScreenController: UIViewController {
         setupView()
         bindViewModel()
         headerViewModel?.reloadData()
+        feedViewModel?.reloadData()
     }
     
-    required convenience init(viewModel: PhotoForumHeaderViewModel) {
+    required convenience init(headerViewModel: PhotoForumHeaderViewModel, feedViewModel: PostsFeedViewModel) {
         self.init()
-        headerViewModel = viewModel
+        self.headerViewModel = headerViewModel
+        self.feedViewModel = feedViewModel
     }
     
     private func bindViewModel() {
@@ -46,6 +49,16 @@ class MainScreenController: UIViewController {
             self.descriptionLabel?.text = viewModel.description
             self.headerImageView?.image = viewModel.headerImage
         }
+        feedViewModel?.didError = { error in
+            let alert = UIAlertController(title: "Unable to load data", message: "Check your netowrk connection", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default)
+            alert.addAction(action)
+            self.present(alert, animated: true)
+        }
+        feedViewModel?.didUpdate = { viewModel in
+            self.tableView?.reloadData()
+        }
+
     }
     
     private func setupView() {
@@ -53,8 +66,10 @@ class MainScreenController: UIViewController {
         let tableView = UITableView(frame: CGRect.zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.estimatedRowHeight = 44.0;
+        PostCell.registerCell(tableView)
         view.addSubview(tableView)
-        tableView.register(PostCell.self, forCellReuseIdentifier: cellidentifier)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalTo(view)
         }
@@ -64,10 +79,12 @@ class MainScreenController: UIViewController {
         headerView = UIView()
         titleLabel = UILabel()
         titleLabel?.textAlignment = .center
+        titleLabel?.textColor = UIColor.white
         headerImageView = UIImageView()
         descriptionLabel = UILabel()
         descriptionLabel?.numberOfLines = 0
         descriptionLabel?.textAlignment = .center
+        descriptionLabel?.textColor = UIColor.white
         headerView?.addSubview(headerImageView!)
         headerView?.addSubview(titleLabel!)
         headerView?.addSubview(descriptionLabel!)
@@ -92,11 +109,11 @@ extension MainScreenController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return feedViewModel?.postCells?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 256
+        return heightForHeader
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -104,8 +121,16 @@ extension MainScreenController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellidentifier, for: indexPath)
+        guard let viewModel = feedViewModel?.postCells?[indexPath.row] else {
+            debugPrint("Unable to find cell")
+            return UITableViewCell()
+        }
+        let cell = PostCell.dequeueCell(tableView, indexPath: indexPath, viewModel: viewModel)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        (cell as? PostCell)?.loadData()
     }
 }
 

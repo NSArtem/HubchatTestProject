@@ -31,10 +31,8 @@ class NetworkService {
             switch response.result {
             case .success(let value):
                 completion(value)
-                debugPrint(value)
             case .failure(let error):
                 failure(error)
-                debugPrint(error)
             }
         }
     }
@@ -66,10 +64,15 @@ class NetworkService {
         }
     }
     
-//    func getPosts(completion: @escaping (Any) -> ()) {
-//        doRequest(endpoint: "forum/photography/post", method: .get, completion: completion)
-//    }
-    
-//    func getFriends(success: @escaping ([Friend]) -> Void, failure: @escaping (Error) -> Void) {
+    func getPosts(success:  @escaping (PostsFeed)->Void, failure: @escaping (Error)->Void) {
+        doRequest(endpoint: "forum/photography/post", method: .get, completion: { data in
+            do {
+                let feed = try postFeedRule.validate(data as AnyObject)
+                success(feed)
+            } catch let error {
+                failure(error)
+            }
+        }, failure: failure)
+    }
     
 }

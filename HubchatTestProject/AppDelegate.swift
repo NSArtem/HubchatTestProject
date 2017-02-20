@@ -18,7 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         if let window = window {
             window.backgroundColor = UIColor.white
-            window.rootViewController = MainScreenController(viewModel: PhotoForumHeaderViewModel(networkService: network))
+            let headerViewModel = PhotoForumHeaderViewModel(networkService: network)
+            let feedViewModel = PostsFeedViewModel(networkService: network)
+            window.rootViewController = MainScreenController(headerViewModel: headerViewModel, feedViewModel: feedViewModel)
             window.makeKeyAndVisible()
         }
         return true

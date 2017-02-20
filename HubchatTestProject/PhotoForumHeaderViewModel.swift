@@ -43,8 +43,7 @@ class PhotoForumHeaderViewModel: ViewModelProtocol {
             self.description = model.description
             if let url = model.headerImageURL {
                 self.network.getImage(endpoint: url, success: { image in
-                    model.headerImage = image
-                    self.headerImage = model.headerImage
+                    self.headerImage = image
                     self.didUpdate?(self)
                 }, failure: { debugPrint($0) })
             }

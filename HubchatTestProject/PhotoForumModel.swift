@@ -14,7 +14,6 @@ class PhotographyForumModel {
     var title: String?
     var description: String?
     var headerImageURL: String?
-    var headerImage: UIImage?
 }
 
 let photographyForumRule = ClassRule(PhotographyForumModel())
