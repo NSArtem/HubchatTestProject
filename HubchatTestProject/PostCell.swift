@@ -85,13 +85,12 @@ class PostCell: UITableViewCell {
             maker.top.equalTo(postTextLabel.snp.bottom).offset(8)
             maker.left.equalTo(contentView)
             maker.right.equalTo(contentView)
-            var ratio: Float
             if let width = viewModel?.postImages?.first?.width, let height = viewModel?.postImages?.first?.height {
-                ratio = Float(width/height)
+                let ratio = Float(height)/Float(width)
+                maker.height.equalTo(postImageView.snp.width).multipliedBy(ratio)
             } else {
-                ratio = 0.64
+                debugPrint("No explicit height/width found for image")
             }
-            maker.height.equalTo(postImageView.snp.width).multipliedBy(ratio)
         }
         self.postImageView = postImageView
         
