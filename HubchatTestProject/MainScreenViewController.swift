@@ -66,7 +66,7 @@ class MainScreenController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = UITableViewAutomaticDimension;
+        tableView.rowHeight = UITableView.automaticDimension;
         tableView.estimatedRowHeight = 44.0;
         PostCell.registerCell(tableView)
         view.addSubview(tableView)

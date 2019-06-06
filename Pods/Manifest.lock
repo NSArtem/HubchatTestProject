@@ -1,18 +1,24 @@
 PODS:
-  - Alamofire (4.3.0)
-  - Bender (1.5.1)
-  - SnapKit (3.2.0)
+  - Alamofire (4.8.2)
+  - Bender (1.6.1)
+  - SnapKit (5.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.3)
-  - Bender (~> 1.5.1)
-  - SnapKit (~> 3.2)
+  - Bender (~> 1.6.1)
+  - SnapKit (~> 5.0.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Bender
+    - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
-  Bender: 38d9c170db91f6f22c860c66407352b220d72ea9
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  Bender: 58043f12550284640e78ce21e45b80b4045ed545
+  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
 
-PODFILE CHECKSUM: 44e5f60dac304ef4c3a32edaa4df77458e15d010
+PODFILE CHECKSUM: 922d3eabad0174138d77d4a26f7f3a47134e7b85
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.7.0

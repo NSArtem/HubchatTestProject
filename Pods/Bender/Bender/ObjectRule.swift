@@ -33,7 +33,7 @@ import Foundation
  Validator for compound types: classes or structs. Validates JSON struct for particular type T,
  which is passed by value of type RefT.
  */
-public class ObjectRule<T, RefT>: Rule {
+open class ObjectRule<T, RefT>: Rule {
     public typealias V = T
     
     fileprivate typealias LateBindClosure = (RefT) -> Void
@@ -317,19 +317,21 @@ public class ObjectRule<T, RefT>: Rule {
     
     fileprivate func validateRequirements(_ json: NSDictionary) throws {
         for (path, rule) in pathRequirements {
-            guard let value = objectIn(json as AnyObject, atPath: path) else {
-                throw RuleError.expectedNotFound("Unable to check the requirement, field \"\(path)\" not found in struct.", nil)
-            }
-            
-            do {
-                if !(try rule(value)) {
-                    throw RuleError.unmetRequirement("Requirement was not met for field \"\(path)\" with value \"\(value)\"", nil)
+            try autoreleasepool {
+                guard let value = getInDictionary(json, atPath: path) else {
+                    throw RuleError.expectedNotFound("Unable to check the requirement, field \"\(path)\" not found in struct.", nil)
                 }
-            } catch let err as RuleError {
-                switch err {
-                case .unmetRequirement: throw err
-                default:
-                    throw RuleError.unmetRequirement("Requirement was not met for field \"\(path)\" with value \"\(value)\"", err)
+                
+                do {
+                    if !(try rule(value)) {
+                        throw RuleError.unmetRequirement("Requirement was not met for field \"\(path)\" with value \"\(value)\"", nil)
+                    }
+                } catch let err as RuleError {
+                    switch err {
+                    case .unmetRequirement: throw err
+                    default:
+                        throw RuleError.unmetRequirement("Requirement was not met for field \"\(path)\" with value \"\(value)\"", err)
+                    }
                 }
             }
         }
@@ -338,14 +340,16 @@ public class ObjectRule<T, RefT>: Rule {
     fileprivate func validateMandatoryRules(_ json: NSDictionary) throws -> [LateBindClosure] {
         var bindings = [LateBindClosure]()
         for (path, rule) in pathMandatoryRules {
-            guard let value = objectIn(json as AnyObject, atPath: path) else {
-                throw RuleError.expectedNotFound("Unable to validate \"\(json)\" as \(T.self). Mandatory field \"\(path)\" not found in struct.", nil)
-            }
-            
-            do {
-                if let binding = try rule(value) { bindings.append(binding) }
-            } catch let err as RuleError {
-                throw RuleError.invalidJSONType("Unable to validate mandatory field \"\(path)\" for \(T.self).", err)
+            try autoreleasepool {
+                guard let value = getInDictionary(json, atPath: path) else {
+                    throw RuleError.expectedNotFound("Unable to validate \"\(json)\" as \(T.self). Mandatory field \"\(path)\" not found in struct.", nil)
+                }
+                
+                do {
+                    if let binding = try rule(value) { bindings.append(binding) }
+                } catch let err as RuleError {
+                    throw RuleError.invalidJSONType("Unable to validate mandatory field \"\(path)\" for \(T.self).", err)
+                }
             }
         }
         return bindings
@@ -354,11 +358,13 @@ public class ObjectRule<T, RefT>: Rule {
     fileprivate func validateOptionalRules(_ json: NSDictionary) throws -> [LateBindClosure] {
         var bindings = [LateBindClosure]()
         for (path, rule) in pathOptionalRules {
-            let value = objectIn(json as AnyObject, atPath: path)
-            do {
-                if let binding = try rule(value) { bindings.append(binding) }
-            } catch let err as RuleError {
-                throw RuleError.invalidJSONType("Unable to validate optional field \"\(path)\" for \(T.self).", err)
+            try autoreleasepool {
+                let value = getInDictionary(json, atPath: path)
+                do {
+                    if let binding = try rule(value) { bindings.append(binding) }
+                } catch let err as RuleError {
+                    throw RuleError.invalidJSONType("Unable to validate optional field \"\(path)\" for \(T.self).", err)
+                }
             }
         }
         return bindings
@@ -366,22 +372,26 @@ public class ObjectRule<T, RefT>: Rule {
     
     fileprivate func dumpMandatoryRules(_ value: T, dictionary: inout [String: AnyObject]) throws {
         for (path, rule) in mandatoryDumpRules {
-            do {
-                dictionary = try setInDictionary(dictionary, object: try rule(value), atPath: path)
-            } catch let err as RuleError {
-                throw RuleError.invalidDump("Unable to dump mandatory field \(path) for \(T.self).", err)
+            try autoreleasepool {
+                do {
+                    dictionary = try setInDictionary(dictionary, object: try rule(value), atPath: path)
+                } catch let err as RuleError {
+                    throw RuleError.invalidDump("Unable to dump mandatory field \(path) for \(T.self).", err)
+                }
             }
         }
     }
     
     fileprivate func dumpOptionalRules(_ value: T, dictionary: inout [String: AnyObject]) throws {
         for (path, rule) in optionalDumpRules {
-            do {
-                if let v = try rule(value) {
-                    dictionary = try setInDictionary(dictionary, object: v, atPath: path)
+            try autoreleasepool {
+                do {
+                    if let v = try rule(value) {
+                        dictionary = try setInDictionary(dictionary, object: v, atPath: path)
+                    }
+                } catch let err as RuleError {
+                    throw RuleError.invalidDump("Unable to dump optional field \(path) for \(T.self).", err)
                 }
-            } catch let err as RuleError {
-                throw RuleError.invalidDump("Unable to dump optional field \(path) for \(T.self).", err)
             }
         }
     }
@@ -390,10 +400,14 @@ public class ObjectRule<T, RefT>: Rule {
 /**
  Validator of compound JSON object with binding to reference type like class T. Reference type is T itself.
  */
-public class ClassRule<T>: ObjectRule<T, T> {
+open class ClassRule<T>: ObjectRule<T, T> {
     
     public override init( _ factory: @autoclosure @escaping ()->T) {
+        #if swift(>=5.0)
+        super.init(factory())
+        #else
         super.init(factory)
+        #endif
     }
     
     open override func value(_ newStruct: T) -> T {
@@ -404,10 +418,14 @@ public class ClassRule<T>: ObjectRule<T, T> {
 /**
  Validator of compound JSON object with binding to value type like struct T. Reference type is ref<T>.
  */
-public class StructRule<T>: ObjectRule<T, ref<T>> {
+open class StructRule<T>: ObjectRule<T, ref<T>> {
     
     public override init( _ factory: @autoclosure @escaping ()->ref<T>) {
+        #if swift(>=5.0)
+        super.init(factory())
+        #else
         super.init(factory)
+        #endif
     }
     
     open override func value(_ newStruct: ref<T>) -> T {

@@ -79,7 +79,7 @@ class PostCell: UITableViewCell {
         let postImageView = UIImageView()
         contentView.addSubview(postImageView)
         postImageView.clipsToBounds = true
-        postImageView.contentMode = UIViewContentMode.scaleAspectFill
+        postImageView.contentMode = UIView.ContentMode.scaleAspectFill
         postImageView.backgroundColor = UIColor.blue
         postImageView.snp.makeConstraints { (maker) in
             maker.top.equalTo(postTextLabel.snp.bottom).offset(8)
